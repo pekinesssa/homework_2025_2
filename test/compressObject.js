@@ -81,4 +81,52 @@ QUnit.module("Тестируем функцию compressObject", function() {
         }, "Все отлчиноБ работает с типами данных: {name: 'Андрей', surname: ' ', age: 44, marryed: false, money: Infinity, children: NaN, Iq: 0}")
     })
     
+    QUnit.test("Работает с типами данных", function(assert) {
+        const result = compressObject({
+            name: "Германия",
+            language: "немецкий",
+            capital:{     
+                name: "Берлин",
+                population: null,
+                year: 1237
+            }
+        })
+
+        assert.deepEqual(result, {
+            name: "Германия",
+            language: "немецкий",
+            capital:{     
+                name: "Берлин",
+                year: 1237
+            }
+        }, "Все отлчино работает с вложенными объектами")
+    })
+
+    
+    QUnit.test("Работает с типами данных", function(assert) {
+        const animal = {
+            name: "meow",
+            data: undefined
+        }
+    
+        const rabbit = {
+            jump: true
+        }
+        rabbit.__proto__ = animal;
+        
+        const result = compressObject(rabbit);
+
+        assert.deepEqual(result, {
+            name: "meow",
+            jump: true
+        }, "Все отлчино не работает с унаследованными свойствами")
+    })
+
+
+    QUnit.test("Работает с типами данных", function(assert) {
+        const result = compressObject('meow')
+
+        assert.deepEqual(result, "Это не объект!", "Все отлчино не работает с объектами")
+    })
+
 });
