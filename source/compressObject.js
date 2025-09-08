@@ -11,20 +11,19 @@
  * @returns {Object} newObject - новый объект без null, undefined, "". 
  */
 const compressObject = function (obj) {
-    if (typeof(obj) != "object"){
-        return "Это не объект!"
-    }
+    if (typeof(obj) !== "object" || typeof(obj) === null || Array.isArray(obj)){
+        throw new TypeError('Это не объект!')   
+    }   
     let newObj = {}
     for (const key in obj){
         const val = obj[key]
         if (val !== null && val !==undefined && val !== ""){
             if (typeof(val) == "object"){
                 newObj[key] = compressObject(val)
-            } else {
+            } else if (obj.hasOwnProperty(key)){
                 newObj[key] = val
             }
         }
     }
-    console.log("ГЕНА НА ВОТ ТВОЕ ПОЛОТЕНЦЕ", newObj)
     return newObj
 }

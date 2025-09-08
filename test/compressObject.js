@@ -78,10 +78,10 @@ QUnit.module("Тестируем функцию compressObject", function() {
             money: Infinity,
             children: NaN,
             Iq: 0
-        }, "Все отлчиноБ работает с типами данных: {name: 'Андрей', surname: ' ', age: 44, marryed: false, money: Infinity, children: NaN, Iq: 0}")
+        }, "Все отлчино, работает с типами данных: {name: 'Андрей', surname: ' ', age: 44, marryed: false, money: Infinity, children: NaN, Iq: 0}")
     })
     
-    QUnit.test("Работает с типами данных", function(assert) {
+    QUnit.test("Проверка на вложенные объекты", function(assert) {
         const result = compressObject({
             name: "Германия",
             language: "немецкий",
@@ -99,11 +99,11 @@ QUnit.module("Тестируем функцию compressObject", function() {
                 name: "Берлин",
                 year: 1237
             }
-        }, "Все отлчино работает с вложенными объектами")
+        }, "Все отлчино, работает с вложенными объектами")
     })
 
     
-    QUnit.test("Работает с типами данных", function(assert) {
+    QUnit.test("Проверка на работу с прототипами", function(assert) {
         const animal = {
             name: "meow",
             data: undefined
@@ -116,17 +116,39 @@ QUnit.module("Тестируем функцию compressObject", function() {
         
         const result = compressObject(rabbit);
 
-        assert.deepEqual(result, {
-            name: "meow",
+        assert.deepEqual(result, {  
             jump: true
-        }, "Все отлчино не работает с унаследованными свойствами")
+        }, "Все отлчино, не работает с унаследованными от прототипа свойствами")
     })
 
+    QUnit.test("Проверка на строки и ошибки", function(assert) {
+        try {
+            const result = compressObject('meow')
+            assert.deepEqual(result, {error: "Тут должна быть ошибка:)"}, "Все отлчино не работает:)")
+        } catch (error) { assert.deepEqual({
+                name: error.name,
+                message: error.message
+            },
+            {
+                name: "TypeError",
+                message: "Это не объект!"
+            }, "Все отлчино, не работает со строками")
+        }
+    })
 
-    QUnit.test("Работает с типами данных", function(assert) {
-        const result = compressObject('meow')
-
-        assert.deepEqual(result, "Это не объект!", "Все отлчино не работает с объектами")
+    QUnit.test("Проверка на массивы и ошибки", function(assert) {
+        try {
+            const result = compressObject([1, 2, 3])
+            assert.deepEqual(result, {error: "Тут должна быть ошибка:)"}, "Все отлчино не работает:)")
+        } catch (error) { assert.deepEqual({
+                name: error.name,
+                message: error.message
+            },
+            {
+                name: "TypeError",
+                message: "Это не объект!"
+            }, "Все отлчино, не работает с массивами")
+        }
     })
 
 });
