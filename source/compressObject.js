@@ -15,7 +15,7 @@ const compressObject = function (obj) {
         throw new TypeError('Это не объект!')   
     }   
     return Object.entries(obj).reduce((newObj, [key, val]) => {
-        if (val !== null && val !==undefined && val !== ""){
+        if ( val != null && val !== ""){
             if (typeof(val) === "object"){
                 newObj[key] = compressObject(val)
             } else if (Object.prototype.hasOwnProperty.call(obj, key)){
