@@ -10,7 +10,7 @@
  * 
  * @returns {Object} newObject - новый объект без null, undefined, "". 
  */
-const compressObject = function (obj) {
+const compressObject=(obj)=>{
     if (obj === null || typeof(obj) !== "object" || Array.isArray(obj)){
         throw new TypeError('Это не объект!')   
     }   
